@@ -1,0 +1,5 @@
+
+go build -o server.exe .\cmd\server\server.go
+.\server.exe
+curl http://localhost:8080/posts
+Clear-Host

@@ -26,8 +26,9 @@ func New(connString string) (*Store, error) {
 	if err = db_sql.Ping(ctx); err != nil {
 		return nil, fmt.Errorf("unable to reach database: %v", err)
 	}
+	s := Store{db_sql}
 
-	return new(Store), nil
+	return &s, nil
 }
 
 // Posts возвращает все посты из базы данных.
@@ -75,7 +76,7 @@ func (s *Store) Posts() ([]storage.Post, error) {
 }
 
 // AddPost добавляет новый пост в базу данных.
-func (s *Store) AddPost(post storage.Post) (int, error) {
+func (s *Store) AddPost(post storage.Post) error {
 	var id int
 	err := s.QueryRow(context.Background(), `
 		INSERT INTO posts (title, content, created_at)
@@ -84,7 +85,7 @@ func (s *Store) AddPost(post storage.Post) (int, error) {
 		post.Title,
 		post.Content,
 	).Scan(&id)
-	return id, err
+	return err
 }
 
 // UpdatePost обновляет существующий пост в базе данных.

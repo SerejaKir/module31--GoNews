@@ -6,7 +6,6 @@ import (
 	"GoNews/pkg/storage/memdb"
 	"GoNews/pkg/storage/mongo"
 	"GoNews/pkg/storage/postgres"
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -50,7 +49,7 @@ func main() {
 	_, _, _ = db1, db2, db3
 
 	// Инициализируем хранилище сервера конкретной БД: db2, db3
-	srv.db = db3
+	srv.db = db2
 
 	// Создаём объект API и регистрируем обработчики.
 	srv.api = api.New(srv.db)
@@ -59,11 +58,10 @@ func main() {
 	// Предаём серверу маршрутизатор запросов,
 	// поэтому сервер будет все запросы отправлять на маршрутизатор.
 	// Маршрутизатор будет выбирать нужный обработчик.
+	//http.ListenAndServe(":8088", srv.api.Router())
 	err = http.ListenAndServe(":8088", srv.api.Router())
 	if err != nil {
 		log.Fatal(err)
-	} else {
-		fmt.Println("HTTP starts without errors/n")
 	}
 	/*
 		var postsAdd = []storage.Post{

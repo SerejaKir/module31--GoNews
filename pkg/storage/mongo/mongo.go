@@ -45,11 +45,14 @@ func New(connString string) (*Store, error) {
 		return nil, fmt.Errorf("failed to ping MongoDB: %v", err)
 	}
 
-	return new(Store), nil
+	s := Store{client}
+
+	return &s, nil
 }
 
 // Posts возвращает все посты из базы данных.
 func (s *Store) Posts() ([]storage.Post, error) {
+
 	collection := s.Database(databaseName).Collection(collectionName)
 	filter := bson.D{}
 	cur, err := collection.Find(context.Background(), filter)

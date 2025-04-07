@@ -1,5 +1,13 @@
+не может импортировать модули:
+go mod tidy
 
-go build -o server.exe .\cmd\server\server.go
-.\server.exe
+запустить сервер:
+go run .\cmd\server\server.go
+
+команда запроса:
 curl http://localhost:8080/posts
 Clear-Host
+
+или запустить отдельным приложением:
+go build -o server.exe .\cmd\server\server.go
+.\server.exe

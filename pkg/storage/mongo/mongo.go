@@ -85,6 +85,7 @@ func (s *Store) AddPost(post storage.Post) error {
 // UpdatePost обновляет существующий пост в базе данных.
 func (s *Store) UpdatePost(post storage.Post) error {
 	collection := s.Database(databaseName).Collection(collectionName)
+	// В UpdatePost и DeletePost нужно использовать bson.D для формирования запросов
 	_, err := collection.UpdateByID(context.Background(), post.ID, post)
 	if err != nil {
 		return err
@@ -95,6 +96,7 @@ func (s *Store) UpdatePost(post storage.Post) error {
 // DeletePost удаляет пост из базы данных.
 func (s *Store) DeletePost(post storage.Post) error {
 	collection := s.Database(databaseName).Collection(collectionName)
+	// В UpdatePost и DeletePost нужно использовать bson.D для формирования запросов
 	_, err := collection.DeleteOne(context.Background(), post.ID)
 	if err != nil {
 		return err
